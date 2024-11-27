@@ -15,14 +15,14 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/users")
+    @GetMapping
     public String show(Model model) {
         List<User> users = userService.getAll();
         model.addAttribute("allUsers", users);
         return "users";
     }
 
-    @PostMapping("/users/add")
+    @PostMapping("/add")
     public String add(
             @RequestParam String name,
             @RequestParam String surname,
@@ -31,17 +31,17 @@ public class UserController {
     ) {
         User user = new User(name, surname, age);
         userService.add(user);
-        return "redirect:/users";
+        return "redirect:/";
     }
 
-    @GetMapping("/users/update")
+    @GetMapping("/update")
     public String update(@RequestParam long id, Model model) {
         User user = userService.findById(id);
         model.addAttribute("user", user);
         return "updateUser";
     }
 
-    @PostMapping("/users/update")
+    @PostMapping("/update")
     public String saveUpdate(@RequestParam long id,
                              @RequestParam String name,
                              @RequestParam String surname,
@@ -52,13 +52,13 @@ public class UserController {
         user.setSurname(surname);
         user.setAge(age);
         userService.update(user);
-        return "redirect:/users";
+        return "redirect:/";
     }
 
-    @PostMapping("/users/delete")
+    @PostMapping("/delete")
     public String delete(@RequestParam long id) {
         userService.delete(id);
-        return "redirect:/users";
+        return "redirect:/";
     }
 
 }
